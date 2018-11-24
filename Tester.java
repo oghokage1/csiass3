@@ -87,7 +87,8 @@ public class Tester {
 	}
 
 	public static void main(String[] args) {
-		
+
+
 		System.out.print("Reading easy passwords from file commonPwd10K.txt\n");
 		ArrayList<String> commonPasswords = readCommonPasswords("commonPwd10K.txt");
 		
@@ -125,7 +126,7 @@ public class Tester {
 		//Scanner scan3 = new Scanner(System.in);
 		String ans = scan.nextLine();
 		
-	    if (ans.equals("y") || ans.equals("Y")) {
+	    /*if (ans.equals("y") || ans.equals("Y")) {
 		
 	    	System.out.println("\n***** Part 2: Testing DatabaseMine *****");
 		
@@ -151,7 +152,7 @@ public class Tester {
 	    	
 	    																										
 		
-	    }
+	    }*/
 	    System.out.println("End of Program.");
 	   
 		
