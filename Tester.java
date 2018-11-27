@@ -68,10 +68,13 @@ public class Tester {
 				if (arr.length!=2) System.out.println("Something Wrong in the Input!");
 				else {
 				  username=arr[0]; // read username
+
 				  cryptic=arr[1].toUpperCase(); // read password hexa for (Sha1) and capitalize to match our capitalized SHA1
 				  System.out.print("user: "+String.format("%15s",username)+" passwd: ");
+
 				  secret=cracker.crackPassword(cryptic, database); // **** call to your method crackPassword in 
 				                                                   // **** class PasswordCracker
+
 				  if (secret.equals("")) System.out.println("<not found!>"); // *** crackPassword returns "" if not found
 				  else System.out.println(secret);
 				}
@@ -82,6 +85,7 @@ public class Tester {
 
 	     catch (Exception e) {
 		  System.out.println("Something Wrong in findPasswords");
+		  e.printStackTrace();
 	     }
 		
 	}
@@ -126,7 +130,7 @@ public class Tester {
 		//Scanner scan3 = new Scanner(System.in);
 		String ans = scan.nextLine();
 		
-	    /*if (ans.equals("y") || ans.equals("Y")) {
+	    if (ans.equals("y") || ans.equals("Y")) {
 		
 	    	System.out.println("\n***** Part 2: Testing DatabaseMine *****");
 		
@@ -152,7 +156,7 @@ public class Tester {
 	    	
 	    																										
 		
-	    }*/
+	    }
 	    System.out.println("End of Program.");
 	   
 		
