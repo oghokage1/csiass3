@@ -15,19 +15,23 @@ public class DatabaseMine implements DatabaseInterface{
 	private Entry<String, String>[] tableArray;
 	private int capacity;
 	private int size;
+	private int collisions;
+	private int probes;
 
 	public DatabaseMine(int capacity){
 		tableArray = new Entry[capacity];
 		this.capacity = capacity;
 		size = 0;
+		collisions = 0;
+		probes++;
 	}
 
 	public DatabaseMine(){
 		tableArray = new Entry[DEFAULT_SIZE];
 		this.capacity = DEFAULT_SIZE;
 		size = 0;
-
-		System.out.println(capacity);
+		collisions = 0;
+		probes++;
 	}
 
 	// Stores plainPassword and corresponding encryptedPassword in a map.
@@ -52,8 +56,23 @@ public class DatabaseMine implements DatabaseInterface{
 	}
 
     public void printStatistics(){
-    		System.out.println("where the stats ould go if i finish");
-     // print statistics based on type of Database
+
+    	System.out.println("Size is "+ size + " passwords");
+    	System.out.println("Number of Indexes is "+capacity);
+    	System.out.println("Load Factor is "+ (double)size/capacity);
+    	System.out.println("Average Number of Probes is " + (double)probes/size);
+    	System.out.println("Number of displacements (due to collisions) is " + collisions);
+/*
+
+    	*** DatabaseMine Statistics ***
+Size is 20 passwords
+Number of Indexes is 37
+Load Factor is 0.5405405
+Average Number of Probes is 1.5
+Number of displacements (due to collisions) 4
+*** End DatabaseMine Statistics ***
+*/
+
 	}
 
 /*
@@ -81,7 +100,7 @@ or null if this map contains no mapping for the key.
 		if(i == capacity){ //looked through whole tabke
 			return null;
 		}
-		
+
 		return tableArray[spot].value;
 	}
 
@@ -90,9 +109,9 @@ Associates the specified value with the specified key in this map.
 If the map previously contained a mapping for the key, the old value is replaced.
 */
 	private void put(String key, String value){
-		int spot = hash(key);
-		//System.out.println("79 CAUGHT U B!!!!");
 
+		int spot = hash(key);
+		boolean displaced = false;
 
 		for(int i = 0;  i< capacity; i++){
 
@@ -101,14 +120,23 @@ If the map previously contained a mapping for the key, the old value is replaced
 				break;
 			}else if(tableArray[spot] == null){
 				tableArray[spot] = new Entry(key, value);
+				if(displaced){
+					collisions++;
+				}
+				size++;
 			}else{
 				spot = (spot+1)%capacity;
+				displaced = true;
+				probes++;
 			}
 		}
 		
 	}
 
 
+/*
+returns hash of string
+*/
 	private int hash(String key){
 		return java.lang.Math.abs((key.hashCode())%capacity);
 
